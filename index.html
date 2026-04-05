@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Bug Fixer Tool | Haren-Dev🚀</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* This is the CSS for dark/light mode and panels */
+        :root { 
+            --bg: #0f172a; 
+            --panel: rgba(30, 41, 59, 0.7); 
+            --text: #f8fafc; 
+            --accent: #3b82f6; 
+            --input: #020617; 
+        }
+        [data-theme="light"] { 
+            --bg: #f1f5f9; 
+            --panel: rgba(255, 255, 255, 0.9); 
+            --text: #1e293b; 
+            --accent: #2563eb; 
+            --input: #ffffff; 
+        }
+        
+        body { 
+            margin: 0; 
+            font-family: 'Poppins', sans-serif; 
+            background: var(--bg); 
+            color: var(--text); 
+            transition: 0.3s; 
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+        }
+
+        /* Basic elements styling - beginner level */
+        #authCard { 
+            width: 90%; 
+            max-width: 400px; 
+            padding: 30px; 
+            border-radius: 24px; 
+            background: var(--panel); 
+            backdrop-filter: blur(15px); 
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3); 
+            text-align: center; 
+            border: 1px solid rgba(255,255,255,0.1); 
+            margin: auto; 
+        }
+        .input-group { display: flex; flex-direction: column; gap: 12px; margin: 20px 0; }
+        input { padding: 12px 15px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); background: var(--input); color: var(--text); outline: none; transition: 0.3s; }
+        .signup-only { display: none; }
+
+        /* Structuring the main dashboard */
+        #app { 
+            display: none; 
+            width: 100%; 
+            flex: 1; 
+            grid-template-columns: 260px 1fr; 
+        }
+        
+        .sidebar { 
+            padding: 20px; 
+            border-right: 1px solid rgba(255,255,255,0.1); 
+            display: flex; 
+            flex-direction: column; 
+            background: rgba(0,0,0,0.2); 
+            height: 100vh;
+            position: sticky;
+            top: 0;
+        }
+
+        .main-content { 
+            display: flex; 
+            flex-direction: column; 
+            width: 100%; 
+            min-height: 100vh; 
+        }
+
+        .workspace { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 20px; 
+            padding: 20px; 
+            flex: 1; 
+        }
+
+        .panel { 
+            background: var(--panel); 
+            border-radius: 15px; 
+            padding: 20px; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .btn { padding: 12px; border: none; border-radius: 10px; cursor: pointer; font-weight: 600; transition: 0.2s; color: white; }
+        .btn-primary { background: var(--accent); }
+        .btn-link { background: none; color: var(--accent); font-size: 13px; text-decoration: underline; border: none; cursor: pointer; margin-top: 10px; }
+
+        textarea { flex: 1; background: var(--input); color: var(--text); border-radius: 12px; padding: 15px; font-family: 'Fira Code', monospace; border: none; outline: none; resize: none; min-height: 250px; }
+        #output { flex: 1; background: var(--input); padding: 15px; border-radius: 12px; overflow-y: auto; white-space: pre-wrap; font-family: 'Fira Code', monospace; font-size: 14px; min-height: 250px; border: 1px solid rgba(255,255,255,0.05); }
+
+        .social-login { display: flex; justify-content: center; gap: 15px; margin-top: 15px; }
+        .social-btn { width: 45px; height: 45px; border-radius: 50%; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: 0.3s; background: white; }
+
+        footer { padding: 20px; text-align: center; font-size: 13px; opacity: 0.7; background: rgba(0,0,0,0.1); border-top: 1px solid rgba(255,255,255,0.05); width: 100%; box-sizing: border-box; }
+
+        /* Small devices */
+        @media (max-width: 850px) {
+            #app { grid-template-columns: 1fr; }
+            .sidebar { display: none; }
+            .workspace { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body data-theme="dark">
+
+<div id="authCard">
+    <h2>Welcome back to AI Bug Fixer🚀</h2>
+    <p style="color:deepskyblue; font-weight: 600;">By Haren-Dev🚀</p>
+    
+    <div class="input-group">
+        <input id="fname" class="signup-only" type="text" placeholder="First Name">
+        <input id="lname" class="signup-only" type="text" placeholder="Surname">
+        <input id="email" type="email" placeholder="Email Address">
+        <input id="pass" type="password" placeholder="Password">
+        <input id="cpass" class="signup-only" type="password" placeholder="Confirm Password">
+    </div>
+
+    <button class="btn btn-primary" style="width:100%" onclick="mainAuth()">Login</button>
+    <button class="btn-link" onclick="toggleMode()" id="toggleTxt">Don't have an account? Sign Up</button>
+
+    <div style="margin: 20px 0 10px; font-size: 11px; opacity: 0.5;">OR LOGIN WITH</div>
+    
+    <div class="social-login">
+        <button class="social-btn" onclick="socialLogin('google')" style="color: #DB4437;"><i class="fab fa-google"></i></button>
+        <button class="social-btn" onclick="socialLogin('github')" style="color: #333;"><i class="fab fa-github"></i></button>
+    </div>
+</div>
+
+<div id="app">
+    <div class="sidebar">
+        <h3>📜 History</h3>
+        <div id="history" style="flex:1; font-size: 13px; opacity: 0.6;">No recent activity</div>
+        <button class="btn" style="background:#ef4444" onclick="logout()">Logout</button>
+    </div>
+
+    <div class="main-content">
+        <div style="padding:15px 20px; background:var(--panel); display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid rgba(255,255,255,0.05)">
+            <span id="userName" style="font-weight:600">AI Bug Fixer Pro</span>
+            <button class="btn" style="background:#64748b; padding: 5px 15px;" onclick="document.body.setAttribute('data-theme', document.body.getAttribute('data-theme')==='light'?'dark':'light')">
+                <i class="fas fa-moon"></i> / <i class="fas fa-sun"></i>
+            </button>
+        </div>
+
+        <div class="workspace">
+            <div class="panel">
+                <textarea id="codeInput" placeholder="Paste your code with bugs here..."></textarea>
+                <div style="display:flex; gap:10px">
+                    <button class="btn btn-primary" style="flex:2" onclick="callAI('fix')">🛠 Fix Code</button>
+                    <button class="btn" style="background:#22c55e; flex:1" onclick="callAI('explain')">💡 Explain</button>
+                </div>
+            </div>
+            <div class="panel">
+                <div id="output">// Result will show here...</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>© 2026 Crafted with ❤️ by <b>Haren-Dev🚀</b> | All Rights Reserved</p>
+</footer>
+
+<script type="module">
+    // Firebase imports for beginner projects
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, GoogleAuthProvider, GithubAuthProvider, signInWithPopup, updateProfile } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+
+    // Standard Firebase Config (Keys will be restricted for safety)
+    const firebaseConfig = {
+        apiKey: "AIzaSyCRTD5lWwE_Klc8L9cM8LHIo1zuEslcs_c",
+        authDomain: "bug-fixer-app.firebaseapp.com",
+        projectId: "bug-fixer-app",
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    let isSignup = false;
+
+    // Toggle logic for beginner auth form
+    window.toggleMode = () => {
+        isSignup = !isSignup;
+        const extra = document.querySelectorAll('.signup-only');
+        extra.forEach(el => el.style.display = isSignup ? 'block' : 'none');
+        document.getElementById('toggleTxt').innerText = isSignup ? "Already have an account? Login" : "Don't have an account? Sign Up";
+    };
+
+    // Form submission logic - beginner level
+    window.mainAuth = async () => {
+        const e = document.getElementById('email').value;
+        const p = document.getElementById('pass').value;
+        if(!e || !p) return alert("Fields cannot be empty!");
+
+        try {
+            if(isSignup) {
+                const name = document.getElementById('fname').value + " " + document.getElementById('lname').value;
+                const res = await createUserWithEmailAndPassword(auth, e, p);
+                await updateProfile(res.user, { displayName: name });
+            } else {
+                await signInWithEmailAndPassword(auth, e, p);
+            }
+        } catch (err) {
+            alert(err.message);
+        }
+    };
+
+    // Social login beginner functions
+    window.socialLogin = async (providerName) => {
+        const provider = providerName === 'google' ? new GoogleAuthProvider() : new GithubAuthProvider();
+        try {
+            await signInWithPopup(auth, provider);
+        } catch(err) {
+            alert(err.message);
+        }
+    };
+
+    window.logout = () => signOut(auth);
+
+    // Watch for user changes
+    onAuthStateChanged(auth, (user) => {
+        if(user) {
+            document.getElementById('authCard').style.display = 'none';
+            document.getElementById('app').style.display = 'grid';
+            document.getElementById('userName').innerText = "Hello, " + (user.displayName || 'Dev');
+        } else {
+            document.getElementById('authCard').style.display = 'block';
+            document.getElementById('app').style.display = 'none';
+        }
+    });
+
+    // Main AI Calling function - Securely through Vercel
+    window.callAI = async (mode) => {
+        const code = document.getElementById('codeInput').value;
+        const out = document.getElementById('output');
+
+        if(!code) return alert("Code paste karo bhai!");
+        
+        out.innerText = "Connecting to AI server... Please wait...";
+        
+        try {
+            // Secure API fetch from our own Vercel route
+            const response = await fetch("/api/fix", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ code: code, mode: mode })
+            });
+
+            const data = await response.json();
+            out.innerText = data.choices[0].message.content;
+        } catch(e) { 
+            out.innerText = "Error fetching data from AI API."; 
+        }
+    };
+</script>
+</body>
+</html>
