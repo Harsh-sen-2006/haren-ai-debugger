@@ -7,7 +7,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" href="./icon.png">
+    
     <style>
+        /* This is the CSS for dark/light mode and panels */
         :root { 
             --bg: #0f172a; 
             --panel: rgba(30, 41, 59, 0.7); 
@@ -34,6 +36,7 @@
             flex-direction: column; 
         }
 
+        /* Basic elements styling - beginner level */
         #authCard { 
             width: 90%; 
             max-width: 400px; 
@@ -50,6 +53,7 @@
         input { padding: 12px 15px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); background: var(--input); color: var(--text); outline: none; transition: 0.3s; }
         .signup-only { display: none; }
 
+        /* Structuring the main dashboard */
         #app { 
             display: none; 
             width: 100%; 
@@ -66,21 +70,7 @@
             height: 100vh;
             position: sticky;
             top: 0;
-            box-sizing: border-box;
         }
-
-        .history-item {
-            padding: 12px;
-            margin-bottom: 10px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 10px;
-            font-size: 12px;
-            cursor: pointer;
-            transition: 0.3s;
-            border-left: 4px solid var(--accent);
-            word-break: break-all;
-        }
-        .history-item:hover { background: rgba(255,255,255,0.1); transform: translateX(5px); }
 
         .main-content { 
             display: flex; 
@@ -107,20 +97,19 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
         
-        .btn { padding: 12px; border: none; border-radius: 10px; cursor: pointer; font-weight: 600; transition: 0.2s; color: white; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn { padding: 12px; border: none; border-radius: 10px; cursor: pointer; font-weight: 600; transition: 0.2s; color: white; }
         .btn-primary { background: var(--accent); }
-        .btn-secondary { background: #64748b; }
-        .btn-clear { background: #ef4444; }
         .btn-link { background: none; color: var(--accent); font-size: 13px; text-decoration: underline; border: none; cursor: pointer; margin-top: 10px; }
 
-        textarea { flex: 1; background: var(--input); color: var(--text); border-radius: 12px; padding: 15px; font-family: 'Fira Code', monospace; border: 1px solid rgba(255,255,255,0.1); outline: none; resize: none; min-height: 300px; }
-        #output { flex: 1; background: var(--input); padding: 15px; border-radius: 12px; overflow-y: auto; white-space: pre-wrap; font-family: 'Fira Code', monospace; font-size: 14px; min-height: 300px; border: 1px solid rgba(255,255,255,0.05); }
+        textarea { flex: 1; background: var(--input); color: var(--text); border-radius: 12px; padding: 15px; font-family: 'Fira Code', monospace; border: none; outline: none; resize: none; min-height: 250px; }
+        #output { flex: 1; background: var(--input); padding: 15px; border-radius: 12px; overflow-y: auto; white-space: pre-wrap; font-family: 'Fira Code', monospace; font-size: 14px; min-height: 250px; border: 1px solid rgba(255,255,255,0.05); }
 
         .social-login { display: flex; justify-content: center; gap: 15px; margin-top: 15px; }
         .social-btn { width: 45px; height: 45px; border-radius: 50%; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: 0.3s; background: white; }
 
-        footer { padding: 25px; text-align: center; font-size: 14px; opacity: 0.8; background: rgba(0,0,0,0.2); border-top: 1px solid rgba(255,255,255,0.05); width: 100%; box-sizing: border-box; margin-top: auto; }
+        footer { padding: 20px; text-align: center; font-size: 13px; opacity: 0.7; background: rgba(0,0,0,0.1); border-top: 1px solid rgba(255,255,255,0.05); width: 100%; box-sizing: border-box; }
 
+        /* Small devices */
         @media (max-width: 850px) {
             #app { grid-template-columns: 1fr; }
             .sidebar { display: none; }
@@ -156,17 +145,15 @@
 <div id="app">
     <div class="sidebar">
         <h3>📜 History</h3>
-        <div id="historyList" style="flex:1; overflow-y: auto; margin-bottom: 20px; padding-right: 5px;">
-            <p style="opacity: 0.4; font-size: 13px; text-align: center;">No recent activity</p>
-        </div>
-        <button class="btn btn-clear" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        <div id="history" style="flex:1; font-size: 13px; opacity: 0.6;">No recent activity</div>
+        <button class="btn" style="background:#ef4444" onclick="logout()">Logout</button>
     </div>
 
     <div class="main-content">
         <div style="padding:15px 20px; background:var(--panel); display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid rgba(255,255,255,0.05)">
-            <span id="userName" style="font-weight:600; font-size: 18px;">AI Bug Fixer Pro</span>
-            <button class="btn btn-secondary" style="padding: 8px 15px;" onclick="document.body.setAttribute('data-theme', document.body.getAttribute('data-theme')==='light'?'dark':'light')">
-                <i class="fas fa-adjust"></i> Theme
+            <span id="userName" style="font-weight:600">AI Bug Fixer Pro</span>
+            <button class="btn" style="background:#64748b; padding: 5px 15px;" onclick="document.body.setAttribute('data-theme', document.body.getAttribute('data-theme')==='light'?'dark':'light')">
+                <i class="fas fa-moon"></i> / <i class="fas fa-sun"></i>
             </button>
         </div>
 
@@ -174,9 +161,8 @@
             <div class="panel">
                 <textarea id="codeInput" placeholder="Paste your code with bugs here..."></textarea>
                 <div style="display:flex; gap:10px">
-                    <button class="btn btn-primary" style="flex:2" onclick="callAI('fix')"><i class="fas fa-tools"></i> Fix Code</button>
-                    <button class="btn" style="background:#22c55e; flex:1" onclick="callAI('explain')"><i class="fas fa-lightbulb"></i> Explain</button>
-                    <button class="btn btn-secondary" style="flex:1" onclick="clearAll()"><i class="fas fa-trash"></i> Clear</button>
+                    <button class="btn btn-primary" style="flex:2" onclick="callAI('fix')">🛠 Fix Code</button>
+                    <button class="btn" style="background:#22c55e; flex:1" onclick="callAI('explain')">💡 Explain</button>
                 </div>
             </div>
             <div class="panel">
@@ -191,10 +177,11 @@
 </footer>
 
 <script type="module">
-    // Firebase Setup
+    // Firebase imports for beginner projects
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, GoogleAuthProvider, GithubAuthProvider, signInWithPopup, updateProfile } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
 
+    // Standard Firebase Config (Keys will be restricted for safety)
     const firebaseConfig = {
         apiKey: "AIzaSyCRTD5lWwE_Klc8L9cM8LHIo1zuEslcs_c",
         authDomain: "bug-fixer-app.firebaseapp.com",
@@ -204,41 +191,8 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     let isSignup = false;
-    let sessionHistory = [];
 
-    // --- FUNCTION: Clear Input/Output ---
-    window.clearAll = () => {
-        document.getElementById('codeInput').value = "";
-        document.getElementById('output').innerText = "// Result will show here...";
-    };
-
-    // --- FUNCTION: History Management ---
-    window.addToHistory = (code, mode) => {
-        const historyList = document.getElementById('historyList');
-        const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        
-        const entry = { 
-            title: mode.toUpperCase() + ": " + code.substring(0, 12).replace(/\n/g, " ") + "...", 
-            fullCode: code,
-            time: time 
-        };
-        
-        sessionHistory.unshift(entry);
-        if(sessionHistory.length > 15) sessionHistory.pop();
-
-        historyList.innerHTML = sessionHistory.map((item, index) => `
-            <div class="history-item" onclick="loadHistory(${index})">
-                <strong>${item.title}</strong><br>
-                <small style="opacity:0.6">${item.time}</small>
-            </div>
-        `).join('');
-    };
-
-    window.loadHistory = (index) => {
-        document.getElementById('codeInput').value = sessionHistory[index].fullCode;
-    };
-
-    // --- FUNCTION: Auth Toggle ---
+    // Toggle logic for beginner auth form
     window.toggleMode = () => {
         isSignup = !isSignup;
         const extra = document.querySelectorAll('.signup-only');
@@ -246,11 +200,12 @@
         document.getElementById('toggleTxt').innerText = isSignup ? "Already have an account? Login" : "Don't have an account? Sign Up";
     };
 
-    // --- FUNCTION: Login/Signup ---
+    // Form submission logic - beginner level
     window.mainAuth = async () => {
         const e = document.getElementById('email').value;
         const p = document.getElementById('pass').value;
         if(!e || !p) return alert("Fields cannot be empty!");
+
         try {
             if(isSignup) {
                 const name = document.getElementById('fname').value + " " + document.getElementById('lname').value;
@@ -259,52 +214,56 @@
             } else {
                 await signInWithEmailAndPassword(auth, e, p);
             }
-        } catch (err) { alert(err.message); }
+        } catch (err) {
+            alert(err.message);
+        }
     };
 
+    // Social login beginner functions
     window.socialLogin = async (providerName) => {
         const provider = providerName === 'google' ? new GoogleAuthProvider() : new GithubAuthProvider();
-        try { await signInWithPopup(auth, provider); } catch(err) { alert(err.message); }
+        try {
+            await signInWithPopup(auth, provider);
+        } catch(err) {
+            alert(err.message);
+        }
     };
 
     window.logout = () => signOut(auth);
 
-    // --- AUTH OBSERVER ---
+    // Watch for user changes
     onAuthStateChanged(auth, (user) => {
-        const authCard = document.getElementById('authCard');
-        const appUI = document.getElementById('app');
         if(user) {
-            authCard.style.display = 'none';
-            appUI.style.display = 'grid';
-            document.getElementById('userName').innerText = "Hello, " + (user.displayName || 'Developer');
+            document.getElementById('authCard').style.display = 'none';
+            document.getElementById('app').style.display = 'grid';
+            document.getElementById('userName').innerText = "Hello, " + (user.displayName || 'Dev');
         } else {
-            authCard.style.display = 'block';
-            appUI.style.display = 'none';
+            document.getElementById('authCard').style.display = 'block';
+            document.getElementById('app').style.display = 'none';
         }
     });
 
-    // --- FUNCTION: AI API CALL ---
+    // Main AI Calling function - Securely through Vercel
     window.callAI = async (mode) => {
         const code = document.getElementById('codeInput').value;
         const out = document.getElementById('output');
-        if(!code) return alert("Please paste some code first!");
+
+        if(!code) return alert("Code paste karo bhai!");
         
-        out.innerText = "Connecting to Haren-Dev AI... Please wait...";
+        out.innerText = "Connecting to AI server... Please wait...";
         
         try {
+            // Secure API fetch from our own Vercel route
             const response = await fetch("/api/fix", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ code: code, mode: mode })
             });
+
             const data = await response.json();
             out.innerText = data.choices[0].message.content;
-            
-            // Success! Save to History sidebar
-            addToHistory(code, mode);
-
         } catch(e) { 
-            out.innerText = "Error: Could not connect to AI. Check your Vercel /api/fix route."; 
+            out.innerText = "Error fetching data from AI API."; 
         }
     };
 </script>
